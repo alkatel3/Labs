@@ -6,14 +6,6 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "Lab1/1.0.0": {
-        "dependencies": {
-          "MyList": "1.0.0"
-        },
-        "runtime": {
-          "Lab1.dll": {}
-        }
-      },
       "MyList/1.0.0": {
         "runtime": {
           "MyList.dll": {}
@@ -22,11 +14,6 @@
     }
   },
   "libraries": {
-    "Lab1/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
     "MyList/1.0.0": {
       "type": "project",
       "serviceable": false,

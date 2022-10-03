@@ -2,11 +2,15 @@
 
 namespace MyList
 {
-    public class MyList<T> :  IList<T>
+    public class MyList<T> :  IList<T>, IEnumerable<T>
     {
         private Item<T> Head;
         private Item<T> Tail;
-        //public int Capacity { get; set; }
+
+        public int Count { get; private set; }
+        bool ICollection<T>.IsReadOnly => IsReadOnly;//TODO
+        public bool IsReadOnly = false;//TODO
+
         public MyList()
         {
             Count = 0;
@@ -20,7 +24,6 @@ namespace MyList
                 Add(item);
             }
         }
-
 
         public T this[int index] { 
             get 
@@ -62,12 +65,6 @@ namespace MyList
             }
         }
 
-        public int Count { get; private set; }
-
-        bool ICollection<T>.IsReadOnly => IsReadOnly;//TODO
-
-        public bool IsReadOnly =false;//TODO
-
         public void Add(T item)
         {
             if(Count == 0)
@@ -85,13 +82,11 @@ namespace MyList
                 Count++;
             }
         }
-
         public void Clear()
         {
             Count = 0;
             Head = Tail = null;
         }
-
         public bool Contains(T item)
         {
             var result = false;
@@ -107,28 +102,8 @@ namespace MyList
             }
             return result;
         }
-
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            var current = Head;
-            while (current != null)
-            {
-                yield return current.Data;
-                current = current.Next;
-            }
-        }
-
         public int IndexOf(T item)
         {
-            if(Count == 0)
-            {
-                return -1;
-            }
             int result = -1;
 
             var current = Head;
@@ -146,7 +121,6 @@ namespace MyList
 
             return result;
         }
-
         public void Insert(int index, T item)
         {
             if (index > Count || index < 0)
@@ -185,22 +159,100 @@ namespace MyList
                 }
             }
         }
-
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
-        }
+            var result = false;
+            if (Count == 0)
+            {
+                return result;
+            }
+            var current = Head;
+            while (current != null)
+            {
+                if (current.Data.Equals(item))
+                {
+                    result=true;
+                    Count--;
+                    break;
+                }
+                current=current.Next;
+            }
 
+            return result;
+        }
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            if (index >= Count || index < 0)
+            {
+                throw new ArgumentOutOfRangeException();//TODO
+            }
+            if (index == 0)
+            {
+                Head = Head.Next;
+                Head.Previous = null;
+            }
+            else if (index == Count - 1)
+            {
+                Tail = Tail.Previous;
+                Tail.Next = null;
+            }
+            else
+            {
+                var current = Head;
+                int currentIndex = 0;
+                while (current != null)
+                {
+                    if (currentIndex == index)
+                    {
+                        current.Next.Previous = current.Previous;
+                        current.Previous.Next = current.Next;
+                        Count--;
+                        break;
+                    }
+                    current = current.Next;
+                    currentIndex++;
+                }
+            }
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullException();//TODO
+            }
+            else if (arrayIndex < 0)
+            {
+                throw new ArgumentOutOfRangeException();//TODO
+            }
+            else if (arrayIndex>=array.Length||Count>array.Length-arrayIndex)//TODO
+            {
+                throw new ArithmeticException();//TODO
+            }
+            else
+            {
+                var Current = Head;
+                for (int i = arrayIndex;
+                    Current != null&&i < array.Length;
+                    i++, Current=Current.Next)
+                {
+                    array[i] = Current.Data;
+                }
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
-
-
+        public IEnumerator<T> GetEnumerator()
+        {
+            var current = Head;
+            while (current != null)
+            {
+                yield return current.Data;
+                current = current.Next;
+            }
+        }
     }
 }
