@@ -26,7 +26,7 @@ namespace Lab1
             Console.WriteLine(items.Count);
             Console.WriteLine();
 
-
+            List<T>
             //for (int i = 0; i < 7; i++)
             //{
             //    Console.WriteLine(items.Contains(i));

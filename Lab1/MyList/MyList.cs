@@ -8,7 +8,9 @@ namespace MyList
         private Item<T> Tail;
 
         public int Count { get; private set; }
-        bool ICollection<T>.IsReadOnly => IsReadOnly;//TODO
+
+        bool ICollection<T>.IsReadOnly => IsReadOnly;
+
         public bool IsReadOnly = false;//TODO
 
         public MyList()
@@ -67,6 +69,10 @@ namespace MyList
 
         public void Add(T item)
         {
+            if(item == null)
+            {
+                throw new NotSupportedException();//TODO
+            }
             if(Count == 0)
             {
                 Head = Tail = new Item<T>(item);
@@ -89,7 +95,15 @@ namespace MyList
         }
         public bool Contains(T item)
         {
+            if (item == null)
+            {
+                throw new NotSupportedException();//TODO
+            }
             var result = false;
+            if (item == null)
+            {
+                return result;
+            }
             var current = Head;
             while (current != null)
             {
@@ -104,8 +118,12 @@ namespace MyList
         }
         public int IndexOf(T item)
         {
-            int result = -1;
 
+            int result = -1;
+            if (item == null)
+            {
+                return result;
+            }
             var current = Head;
             var currentIndex = 0;
             while (current != null)
@@ -123,6 +141,10 @@ namespace MyList
         }
         public void Insert(int index, T item)
         {
+            if (item == null)
+            {
+                throw new NotSupportedException();//TODO
+            }
             if (index > Count || index < 0)
             {
                 throw new ArgumentOutOfRangeException();//TODO
@@ -161,6 +183,10 @@ namespace MyList
         }
         public bool Remove(T item)
         {
+            if (item == null)
+            {
+                throw new NotSupportedException();//TODO
+            }
             var result = false;
             if (Count == 0)
             {
