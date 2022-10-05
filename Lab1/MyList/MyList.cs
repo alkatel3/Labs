@@ -88,6 +88,17 @@ namespace MyList
                 Count++;
             }
         }
+        public void AddRange(IEnumerable<T> collection)
+        {
+            if (collection == null)
+            {
+                throw new ArgumentNullException();//TODO
+            }
+            foreach(var item in collection)
+            {
+                Add(item);
+            }
+        }
         public void Clear()
         {
             Count = 0;
@@ -159,6 +170,7 @@ namespace MyList
                 Item.Next = Head;
                 Head.Previous = Item;
                 Head = Item;
+                Count++;
             }
             else
             {
@@ -183,27 +195,39 @@ namespace MyList
         }
         public bool Remove(T item)
         {
-            if (item == null)
-            {
-                throw new NotSupportedException();//TODO
-            }
             var result = false;
-            if (Count == 0)
+            if(Count == 0 || item == null)
             {
                 return result;
             }
-            var current = Head;
-            while (current != null)
+            if (Head.Data.Equals(item))
+            {
+                Head = Head.Next;
+                Head.Previous = null;
+                Count--;
+                result = true;
+                return result;
+            }
+            var current = Head.Next;
+            while (current.Next != null)
             {
                 if (current.Data.Equals(item))
                 {
+                    current.Previous.Next=current.Next;
+                    current.Next.Previous=current.Previous;
                     result=true;
                     Count--;
                     break;
                 }
                 current=current.Next;
             }
-
+            if (Tail.Data.Equals(item))
+            {
+                Tail = Tail.Previous;
+                Tail.Next = null;
+                Count--;
+                result = true;
+            }
             return result;
         }
         public void RemoveAt(int index)
