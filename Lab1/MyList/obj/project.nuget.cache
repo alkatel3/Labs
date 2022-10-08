@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8C8J2p3l65JtwxQfw+PJ2AzpKvVzAFeePcwPqyt/GhGTRI9LG40H9GjF1LwGG06fbeOW2NaouZmT0HdQ0XX8Yg==",
+  "dgSpecHash": "FRass7zo1DL5bnPCKP6QpzObXe04lbJI0EnISn87AKZaOuf0f1uFN6cQ4WLxGWz7DZ7TjJQmA4tDeS7TMUb2iQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Dell\\source\\repos\\Labs\\Lab1\\MyList\\MyList.csproj",
+  "projectFilePath": "C:\\Users\\Dell\\source\\repos\\.NET\\Labs\\Lab1\\MyList\\MyList.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

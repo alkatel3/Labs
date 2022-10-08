@@ -4,12 +4,17 @@ namespace MyList
 {
     public class MyList<T> :  IList<T>, IEnumerable<T>
     {
-        private Item<T> Head;
-        private Item<T> Tail;
+        private Item<T>? Head;
+        private Item<T>? Tail;
+        public event EventHandler<T> AddEvent;
+        public event EventHandler<T> RemoveEvent;
+        public event EventHandler<T> CopyEvent;
+        public event EventHandler<T> ChangeEvent;
+
 
         public int Count { get; private set; }
 
-        bool ICollection<T>.IsReadOnly => IsReadOnly;
+        bool ICollection<T>.IsReadOnly => IsReadOnly;//TODO
 
         public bool IsReadOnly = false;//TODO
 
@@ -21,10 +26,7 @@ namespace MyList
         public MyList(IEnumerable<T> collection)
         {
             Count = 0;
-            foreach(T item in collection)
-            {
-                Add(item);
-            }
+            AddRange(collection);
         }
 
         public T this[int index] { 
@@ -60,6 +62,7 @@ namespace MyList
                     if (currentIndex == index)
                     {
                         current.Data=value;
+                        OnEvent(ChangeEvent, value);//TODO
                     }
                     currentIndex++;
                     current = current.Next;
@@ -77,6 +80,7 @@ namespace MyList
             {
                 Head = Tail = new Item<T>(item);
                 Count++;
+                OnEvent(AddEvent, item);
                 return;
             }
             else
@@ -86,6 +90,7 @@ namespace MyList
                 Tail.Next = Item;
                 Tail = Item;
                 Count++;
+                OnEvent(AddEvent, item);
             }
         }
         public void AddRange(IEnumerable<T> collection)
@@ -106,10 +111,6 @@ namespace MyList
         }
         public bool Contains(T item)
         {
-            if (item == null)
-            {
-                throw new NotSupportedException();//TODO
-            }
             var result = false;
             if (item == null)
             {
@@ -171,6 +172,7 @@ namespace MyList
                 Head.Previous = Item;
                 Head = Item;
                 Count++;
+                OnEvent(AddEvent, item);
             }
             else
             {
@@ -186,6 +188,7 @@ namespace MyList
                         Item.Next = current;
                         current.Previous=Item;
                         Count++;
+                        OnEvent(AddEvent, item);
                         break;
                     }
                     current = current.Next;
@@ -202,30 +205,27 @@ namespace MyList
             }
             if (Head.Data.Equals(item))
             {
-                Head = Head.Next;
-                Head.Previous = null;
-                Count--;
+                RemoveFirst();
                 result = true;
                 return result;
+                OnEvent(RemoveEvent, item);
             }
             var current = Head.Next;
             while (current.Next != null)
             {
                 if (current.Data.Equals(item))
                 {
-                    current.Previous.Next=current.Next;
-                    current.Next.Previous=current.Previous;
+                    RemoveCurrent(current);
                     result=true;
-                    Count--;
+                    OnEvent(RemoveEvent, item);
                     break;
                 }
                 current=current.Next;
             }
             if (Tail.Data.Equals(item))
             {
-                Tail = Tail.Previous;
-                Tail.Next = null;
-                Count--;
+                RemoveLast();
+                OnEvent(RemoveEvent, item);
                 result = true;
             }
             return result;
@@ -238,13 +238,14 @@ namespace MyList
             }
             if (index == 0)
             {
-                Head = Head.Next;
-                Head.Previous = null;
+                OnEvent(RemoveEvent, Head.Data);
+                RemoveFirst();
+
             }
             else if (index == Count - 1)
             {
-                Tail = Tail.Previous;
-                Tail.Next = null;
+                OnEvent(RemoveEvent, Tail.Data);
+                RemoveLast();
             }
             else
             {
@@ -254,9 +255,8 @@ namespace MyList
                 {
                     if (currentIndex == index)
                     {
-                        current.Next.Previous = current.Previous;
-                        current.Previous.Next = current.Next;
-                        Count--;
+                        OnEvent(RemoveEvent, current.Data);
+                        RemoveCurrent(current);
                         break;
                     }
                     current = current.Next;
@@ -304,5 +304,29 @@ namespace MyList
                 current = current.Next;
             }
         }
+
+        protected virtual void OnEvent(EventHandler<T> SomeEvent, T e)
+        {
+            SomeEvent?.Invoke(this, e);
+        }
+        private void RemoveLast()
+        {
+            Tail = Tail.Previous;
+            Tail.Next = null;
+            Count--;
+        }
+        private void RemoveFirst()
+        {
+            Head = Head.Next;
+            Head.Previous = null;
+            Count--;
+        }
+        private void RemoveCurrent(Item<T> current)
+        {
+            current.Previous.Next = current.Next;
+            current.Next.Previous = current.Previous;
+            Count--;
+        }
     }
 }
+
