@@ -1,4 +1,5 @@
 ﻿using MyList;
+using System.Collections.ObjectModel;
 
 namespace Lab1
 {
@@ -6,8 +7,34 @@ namespace Lab1
     {
         static void Main(string[] args)
         {
-            List<string> list = new();
-            Console.WriteLine(list.Contains(null));
+            MyList<string> strings = new MyList<string>();
+            strings.Add("sas");
+            strings.Add("sdf");
+            strings.Add("asf");
+            strings.Add("wge");
+            strings.Add(null);
+
+            foreach (var item in strings)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine(strings.Contains(null));
+            Console.WriteLine(strings.IndexOf(null));
+
+            //List<string> strings2 = new List<string>();
+            //strings2.Add("sas");
+            //strings2.Add("sdf");
+            //strings2.Add("asf");
+            //strings2.Add("wge");
+            //strings2.Add(null);
+
+            //foreach (var item in strings2)
+            //{
+            //    Console.WriteLine(item);
+            //}
+            //Console.WriteLine(strings2.Contains(null));
+            //Console.WriteLine(strings2.IndexOf(null));
+
             //MyList<int> items = new();
             ////Console.WriteLine(items.Contains(1));
             ////Console.WriteLine(items.IndexOf(6));
@@ -20,7 +47,7 @@ namespace Lab1
             //items.Add(3);
             //items.Add(4);
             //items.Add(6);
-         
+
             //foreach (int item in items)
             //{
             //    Console.WriteLine(item) ;

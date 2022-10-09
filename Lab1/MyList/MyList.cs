@@ -2,7 +2,7 @@
 
 namespace MyList
 {
-    public class MyList<T> :  IList<T>, IEnumerable<T>
+    public class MyList<T> :  IList<T>
     {
         private Item<T>? Head;
         private Item<T>? Tail;
@@ -20,8 +20,7 @@ namespace MyList
 
         public MyList()
         {
-            Count = 0;
-            Head = Tail = null;
+            Clear();
         }
         public MyList(IEnumerable<T> collection)
         {
@@ -68,30 +67,23 @@ namespace MyList
                     current = current.Next;
                 }
             }
-        }
+        }       //TODO
 
         public void Add(T item)
         {
-            if(item == null)
+            var Item = new Item<T>(item);
+            if (Count == 0)
             {
-                throw new NotSupportedException();//TODO
-            }
-            if(Count == 0)
-            {
-                Head = Tail = new Item<T>(item);
-                Count++;
-                OnEvent(AddEvent, item);
-                return;
+                Head = Tail = Item;
             }
             else
             {
-                var Item = new Item<T>(item);
                 Item.Previous = Tail;
                 Tail.Next = Item;
                 Tail = Item;
-                Count++;
-                OnEvent(AddEvent, item);
             }
+            Count++;
+            OnEvent(AddEvent, item);
         }
         public void AddRange(IEnumerable<T> collection)
         {
@@ -112,14 +104,10 @@ namespace MyList
         public bool Contains(T item)
         {
             var result = false;
-            if (item == null)
-            {
-                return result;
-            }
             var current = Head;
             while (current != null)
             {
-                if (current.Data.Equals(item))
+                if (current.Data?.Equals(item) ?? item == null)
                 {
                     result = true;
                     break;
@@ -130,17 +118,12 @@ namespace MyList
         }
         public int IndexOf(T item)
         {
-
             int result = -1;
-            if (item == null)
-            {
-                return result;
-            }
             var current = Head;
             var currentIndex = 0;
             while (current != null)
             {
-                if (current.Data.Equals(item))
+                if (current.Data?.Equals(item) ?? item == null)
                 {
                     result = currentIndex;
                     break;
@@ -148,7 +131,6 @@ namespace MyList
                 currentIndex++;
                 current = current.Next;
             }
-
             return result;
         }
         public void Insert(int index, T item)
@@ -186,7 +168,7 @@ namespace MyList
                         current.Previous.Next = Item;
                         Item.Previous = current.Previous;
                         Item.Next = current;
-                        current.Previous=Item;
+                        current.Previous = Item;
                         Count++;
                         OnEvent(AddEvent, item);
                         break;
@@ -264,7 +246,6 @@ namespace MyList
                 }
             }
         }
-
         public void CopyTo(T[] array, int arrayIndex)
         {
             if (array == null)
@@ -275,7 +256,7 @@ namespace MyList
             {
                 throw new ArgumentOutOfRangeException();//TODO
             }
-            else if (arrayIndex>=array.Length||Count>array.Length-arrayIndex)//TODO
+            else if (arrayIndex >= array.Length || Count > array.Length - arrayIndex)//TODO
             {
                 throw new ArithmeticException();//TODO
             }
@@ -283,17 +264,12 @@ namespace MyList
             {
                 var Current = Head;
                 for (int i = arrayIndex;
-                    Current != null&&i < array.Length;
-                    i++, Current=Current.Next)
+                    Current != null && i < array.Length;
+                    i++, Current = Current.Next)
                 {
                     array[i] = Current.Data;
                 }
             }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
         public IEnumerator<T> GetEnumerator()
         {
@@ -305,6 +281,10 @@ namespace MyList
             }
         }
 
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
         protected virtual void OnEvent(EventHandler<T> SomeEvent, T e)
         {
             SomeEvent?.Invoke(this, e);
