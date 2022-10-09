@@ -7,117 +7,121 @@ namespace Lab1
     {
         static void Main(string[] args)
         {
-            MyList<string> strings = new MyList<string>();
-            strings.Add("sas");
-            strings.Add("sdf");
-            strings.Add("asf");
-            strings.Add("wge");
-            strings.Add(null);
+            var persons=new MyList<Person>();
 
-            foreach (var item in strings)
+            persons.AddEvent += Add;
+            persons.ChangeEvent += Change;
+            persons.CopyEvent += Copy;
+            persons.RemoveEvent += Remove;
+
+            persons.Clear();
+            Console.WriteLine(persons.Contains(null));
+            Console.WriteLine(persons.Contains(new Person("Dan",18)));
+
+            Console.WriteLine(persons.IndexOf(null));
+            Console.WriteLine(persons.IndexOf(new Person("Dan", 18)));
+
+            Console.WriteLine(persons.Remove(null));
+            Console.WriteLine(persons.Remove(new Person("Dan", 18)));
+
+
+            var ArrayPersons = new Person[6];
+            persons.CopyTo(ArrayPersons, 0);
+
+            foreach(var item in persons)
             {
                 Console.WriteLine(item);
             }
-            Console.WriteLine(strings.Contains(null));
-            Console.WriteLine(strings.IndexOf(null));
+            Console.WriteLine();
 
-            //List<string> strings2 = new List<string>();
-            //strings2.Add("sas");
-            //strings2.Add("sdf");
-            //strings2.Add("asf");
-            //strings2.Add("wge");
-            //strings2.Add(null);
+            persons.Add(new("Oleg", 20));
+            persons.Add(new("Olya", 19));
+            persons.Add(new("Mary", 22));
+            persons.Add(new("Sem", 25));
+            persons.Add(new("Bob", 34));
+            persons.Add(null);
 
-            //foreach (var item in strings2)
-            //{
-            //    Console.WriteLine(item);
-            //}
-            //Console.WriteLine(strings2.Contains(null));
-            //Console.WriteLine(strings2.IndexOf(null));
+            persons[1] = null;
+            persons[0] = new("Roman", 23);
+            persons.CopyTo(ArrayPersons, 0);
+            persons.AddRange(ArrayPersons);
 
-            //MyList<int> items = new();
-            ////Console.WriteLine(items.Contains(1));
-            ////Console.WriteLine(items.IndexOf(6));
-            //items.Add(1);
-            //items.Add(2);
-            //items.Add(3);
-            //items.Add(4);
-            //items.Add(2);
-            //items.Add(2);
-            //items.Add(3);
-            //items.Add(4);
-            //items.Add(6);
+            foreach (var item in persons)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine();
+            persons.Clear();
+            foreach (var item in persons)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine();
+            persons.AddRange(ArrayPersons);
+            persons.AddRange(ArrayPersons);
+            foreach (var item in persons)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine();
 
-            //foreach (int item in items)
-            //{
-            //    Console.WriteLine(item) ;
-            //}
-            //Console.WriteLine();
+            Console.WriteLine(persons.Contains(new("Roman", 23)));
+            Console.WriteLine(persons.IndexOf(new("Oleg", 20)));
+            Console.WriteLine(persons.IndexOf(null));
+            Console.WriteLine(persons.IndexOf(new("Roman", 23)));
+            Console.WriteLine(persons.Remove(null));
+            Console.WriteLine(persons.Remove(null));
+            Console.WriteLine(persons.IndexOf(null));
+            Console.WriteLine(persons.Remove(null));
+            Console.WriteLine(persons.Remove(null));
+            Console.WriteLine(persons.IndexOf(null));
+            Console.WriteLine(persons.Remove(null));
+            Console.WriteLine(persons.IndexOf(null));
+            foreach (var item in persons)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine();
+            persons.RemoveAt(0);
+            foreach (var item in persons)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine(persons.Count);
+            persons.IsReadOnly = true;
+            //persons.Clear();
+        }
 
-            //List<string> list = new()
-            //{
-            //    "1","2","3","4"
-            //};
-            //Console.WriteLine(list.Remove(null));
-            ////list.Insert(list.Count,1);
-            ////foreach(var item in list)
-            ////{
-            ////    Console.WriteLine(item);
-            ////}
-            ////foreach (int item in items)
-            ////{
-            ////    Console.WriteLine(item);
-            ////}
+        private static void Remove(object? sender, Person e)
+        {
+            if (sender is MyList<Person> list)
+            {
+                Console.WriteLine($"{e} removed from {list}");
+            }
+        }
 
-            ////for (int i = 0; i < 7; i++)
-            ////{
-            ////    Console.WriteLine(items.Contains(i));
-            ////}
+        private static void Copy(object? sender, Person e)
+        {
+            if (sender is MyList<Person> list)
+            {
+                Console.WriteLine($"{list} copied");
+            }
+        }
 
-            ////for (int i = 0; i < 7; i++)
-            ////{
-            ////    Console.WriteLine(items.IndexOf(i));
-            ////}
+        private static void Change(object? sender, Person e)
+        {
+            if (sender is MyList<Person> list)
+            {
+                Console.WriteLine($"Changed one element in {list} new data of this list is {e}");
+            }
+        }
 
-            //for (int i = 0; i <= items.Count; i += 2)
-            //{
-            //    items.Insert(i, i + 10);
-            //}
-            //foreach (int item in items)
-            //{
-            //    Console.WriteLine(item);
-            //}
-            //Console.WriteLine();
-            //for (int i=0; i <= items.Count; i++)
-            //{
-            //    Console.WriteLine(items.Remove(i));
-            //}
-            //Console.WriteLine(items.Remove(14));
-            //Console.WriteLine(items.Remove(28));
-            //items.Clear();
-            //Console.WriteLine();
-            //Console.WriteLine(items.Remove(14));
-            //foreach (int item in items)
-            //{
-            //    Console.WriteLine(item);
-            //}
-            //Console.WriteLine();
-
-            ////items.Remove(2);
-            ////foreach (int item in items)
-            ////{
-            ////    Console.WriteLine(item);
-            ////}
-            ////items.RemoveAt(10);
-
-            ////var Array = new int[10];
-            ////items.CopyTo(Array, 3);
-            ////foreach (int item in Array)
-            ////{
-            ////    Console.WriteLine(item);
-            ////}
-            ////Console.WriteLine();
-            ////Console.WriteLine(Array.Length);
+        private static void Add(object? sender, Person e)
+        {
+            if(sender is MyList<Person> list)
+            {
+                Console.WriteLine($"Added {e} to {list}");
+            }
         }
     }
 }
