@@ -15,14 +15,14 @@ namespace Lab1
             persons.RemoveEvent += Remove;
 
             persons.Clear();
-            Console.WriteLine(persons.Contains(null));
-            Console.WriteLine(persons.Contains(new Person("Dan",18)));
+            Console.WriteLine(persons.Contains(null));  
+            Console.WriteLine(persons.Contains(new Person("Dan",18)));   
 
-            Console.WriteLine(persons.IndexOf(null));
-            Console.WriteLine(persons.IndexOf(new Person("Dan", 18)));
+            Console.WriteLine(persons.IndexOf(null));   
+            Console.WriteLine(persons.IndexOf(new Person("Dan", 18))); 
 
-            Console.WriteLine(persons.Remove(null));
-            Console.WriteLine(persons.Remove(new Person("Dan", 18)));
+            Console.WriteLine(persons.Remove(null));  
+            Console.WriteLine(persons.Remove(new Person("Dan", 18)));   
 
 
             var ArrayPersons = new Person[6];
@@ -48,20 +48,42 @@ namespace Lab1
 
             foreach (var item in persons)
             {
-                Console.WriteLine(item);
+                if (item == null)
+                {
+                    Console.WriteLine("null");
+                }
+                else
+                {
+                    Console.WriteLine(item);
+                }
             }
             Console.WriteLine();
             persons.Clear();
             foreach (var item in persons)
             {
-                Console.WriteLine(item);
+                if (item == null)
+                {
+                    Console.WriteLine("null");
+                }
+                else
+                {
+                    Console.WriteLine(item);
+                }
             }
             Console.WriteLine();
+
             persons.AddRange(ArrayPersons);
             persons.AddRange(ArrayPersons);
             foreach (var item in persons)
             {
-                Console.WriteLine(item);
+                if (item == null)
+                {
+                    Console.WriteLine("null");
+                }
+                else
+                {
+                    Console.WriteLine(item);
+                }
             }
             Console.WriteLine();
 
@@ -79,13 +101,27 @@ namespace Lab1
             Console.WriteLine(persons.IndexOf(null));
             foreach (var item in persons)
             {
-                Console.WriteLine(item);
+                if (item == null)
+                {
+                    Console.WriteLine("null");
+                }
+                else
+                {
+                    Console.WriteLine(item);
+                }
             }
             Console.WriteLine();
             persons.RemoveAt(0);
             foreach (var item in persons)
             {
-                Console.WriteLine(item);
+                if (item == null)
+                {
+                    Console.WriteLine("null");
+                }
+                else
+                {
+                    Console.WriteLine(item);
+                }
             }
             Console.WriteLine(persons.Count);
             persons.IsReadOnly = true;
@@ -96,7 +132,14 @@ namespace Lab1
         {
             if (sender is MyList<Person> list)
             {
-                Console.WriteLine($"{e} removed from {list}");
+                if (e == null)
+                {
+                    Console.WriteLine($"null removed from {list}");
+                }
+                else
+                {
+                    Console.WriteLine($"{e} removed from {list}");
+                }
             }
         }
 
@@ -112,7 +155,14 @@ namespace Lab1
         {
             if (sender is MyList<Person> list)
             {
-                Console.WriteLine($"Changed one element in {list} new data of this list is {e}");
+                if (e == null)
+                {
+                    Console.WriteLine($"Changed one element in {list} new data of this list is null");
+                }
+                else
+                {
+                    Console.WriteLine($"Changed one element in {list} new data of this list is {e}");
+                }
             }
         }
 
@@ -120,7 +170,14 @@ namespace Lab1
         {
             if(sender is MyList<Person> list)
             {
-                Console.WriteLine($"Added {e} to {list}");
+                if (e == null)
+                {
+                    Console.WriteLine($"Added null to {list}");
+                }
+                else
+                {
+                    Console.WriteLine($"Added {e} to {list}");
+                }
             }
         }
     }

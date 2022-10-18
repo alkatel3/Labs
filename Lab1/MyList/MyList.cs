@@ -10,12 +10,13 @@ namespace MyList
         public event EventHandler<T> RemoveEvent;
         public event EventHandler<T> CopyEvent;
         public event EventHandler<T> ChangeEvent;
-        private delegate void ChangeByIndex(T newElement, Item<T> current);
+
+        private delegate void ActionByIndex(T item, Item<T> current);
 
 
         public int Count { get; private set; }
 
-        bool ICollection<T>.IsReadOnly => IsReadOnly;//TODO
+        bool ICollection<T>.IsReadOnly => IsReadOnly;
 
         public bool IsReadOnly = false;
 
@@ -160,12 +161,6 @@ namespace MyList
                 result = true;
                 OnEvent(RemoveEvent, item);
             }
-            else if (Tail.Data?.Equals(item) ?? item == null)
-            {
-                RemoveLast();
-                OnEvent(RemoveEvent, item);
-                result = true;
-            }
             else
             {
                 var current = Head.Next;
@@ -175,10 +170,16 @@ namespace MyList
                     {
                         RemoveCurrent(item, current);
                         result = true;
-                        break;
+                        return result;
                     }
                     current = current.Next;
                 }
+            }
+            if (Tail.Data?.Equals(item) ?? item == null)
+            {
+                RemoveLast();
+                OnEvent(RemoveEvent, item);
+                result = true;
             }
             return result;
         }
@@ -266,7 +267,7 @@ namespace MyList
                 throw new ArgumentOutOfRangeException(nameof(index), "The index must be less than count and not less than zero");
             }
         }        
-        private void FindingByIndex(int index, T value, ChangeByIndex action)
+        private void FindingByIndex(int index, T value, ActionByIndex action)
         {
             var current = Head;
             var currentIndex = 0;
