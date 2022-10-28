@@ -14,7 +14,18 @@
           "Lab1.dll": {}
         }
       },
+      "Microsoft.CodeCoverage/17.5.0-preview-20221003-04": {
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.VisualStudio.CodeCoverage.Shim.dll": {
+            "assemblyVersion": "15.0.0.0",
+            "fileVersion": "17.500.22.48002"
+          }
+        }
+      },
       "MyList/1.0.0": {
+        "dependencies": {
+          "Microsoft.CodeCoverage": "17.5.0-preview-20221003-04"
+        },
         "runtime": {
           "MyList.dll": {}
         }
@@ -26,6 +37,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Microsoft.CodeCoverage/17.5.0-preview-20221003-04": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3xgt5Lf/XcEPxk4aclgJIYwwmt8fcTFmKmxSBoAPoQ5U5liQcsncrHhCg9twligVqfYT2PptBevpQLAR8WuUAg==",
+      "path": "microsoft.codecoverage/17.5.0-preview-20221003-04",
+      "hashPath": "microsoft.codecoverage.17.5.0-preview-20221003-04.nupkg.sha512"
     },
     "MyList/1.0.0": {
       "type": "project",

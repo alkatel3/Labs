@@ -49,3 +49,22 @@ C:\Users\Dell\source\repos\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\refint\Lab1.dll
 C:\Users\Dell\source\repos\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\Lab1.pdb
 C:\Users\Dell\source\repos\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\Lab1.genruntimeconfig.cache
 C:\Users\Dell\source\repos\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\ref\Lab1.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\bin\Debug\net6.0\Lab1.exe
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\bin\Debug\net6.0\Lab1.deps.json
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\bin\Debug\net6.0\Lab1.runtimeconfig.json
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\bin\Debug\net6.0\Lab1.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\bin\Debug\net6.0\Lab1.pdb
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\bin\Debug\net6.0\Microsoft.VisualStudio.CodeCoverage.Shim.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\bin\Debug\net6.0\MyList.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\bin\Debug\net6.0\MyList.pdb
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\Lab1.csproj.AssemblyReference.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\Lab1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\Lab1.AssemblyInfoInputs.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\Lab1.AssemblyInfo.cs
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\Lab1.csproj.CoreCompileInputs.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\Lab1.csproj.CopyComplete
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\Lab1.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\refint\Lab1.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\Lab1.pdb
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\Lab1.genruntimeconfig.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\Lab1\obj\Debug\net6.0\ref\Lab1.dll

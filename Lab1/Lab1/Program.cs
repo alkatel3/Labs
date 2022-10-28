@@ -48,14 +48,7 @@ namespace Lab1
 
             foreach (var item in persons)
             {
-                if (item == null)
-                {
-                    Console.WriteLine("null");
-                }
-                else
-                {
                     Console.WriteLine(item);
-                }
             }
             Console.WriteLine();
             persons.Clear();
@@ -126,6 +119,11 @@ namespace Lab1
             Console.WriteLine(persons.Count);
             persons.IsReadOnly = true;
             //persons.Clear();
+
+            var ls = new List<int>
+            {
+                1,2,3,4,5
+            };
         }
 
         private static void Remove(object? sender, Person e)

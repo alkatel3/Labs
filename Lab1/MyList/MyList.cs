@@ -6,36 +6,22 @@ namespace MyList
     {
         private Item<T>? Head;
         private Item<T>? Tail;
-        public event EventHandler<T> AddEvent;
-        public event EventHandler<T> RemoveEvent;
-        public event EventHandler<T> CopyEvent;
-        public event EventHandler<T> ChangeEvent;
-
-        private delegate void ActionByIndex(T item, Item<T> current);
-
-
-        public int Count { get; private set; }
-
+        private delegate void ActionByIndex(T? NewValue, Item<T> current);
         bool ICollection<T>.IsReadOnly => IsReadOnly;
 
+        public event EventHandler<T>? AddEvent;
+        public event EventHandler<T>? RemoveEvent;
+        public event EventHandler<T>? CopyEvent;
+        public event EventHandler<T>? ChangeEvent;
+        public int Count { get; private set; }
         public bool IsReadOnly = false;
 
-        public MyList()
-        {
-            Clear();
-        }
-        public MyList(IEnumerable<T> collection)
-        {
-            Count = 0;
-            AddRange(collection);
-        }
-
-        public T this[int index]
+        public T? this[int index]
         {
             get
             {
                 CheckingCorrectnessIndex(index);
-                var current = Head;
+                Item<T>? current = Head;
                 var currentIndex = 0;
                 while (current != null)
                 {
@@ -52,12 +38,22 @@ namespace MyList
             {
                 CheckingIsReadOnly();
                 CheckingCorrectnessIndex(index);
-                FindingByIndex(index, value, (value, current)=>current.Data=value);
+                FindingByIndex(index, value, (value, current) => current.Data = value);
                 OnEvent(ChangeEvent, value);
             }
         }
 
-        public void Add(T item)
+        public MyList()
+        {
+            Count = 0;
+            Head = Tail = null;
+        }
+        public MyList(IEnumerable<T>? collection) : this()
+        {
+            AddRange(collection);
+        }
+
+        public void Add(T? item)
         {
             CheckingIsReadOnly();
             var Item = new Item<T>(item);
@@ -74,7 +70,7 @@ namespace MyList
             Count++;
             OnEvent(AddEvent, item);
         }
-        public void AddRange(IEnumerable<T> collection)
+        public void AddRange(IEnumerable<T>? collection)
         {
             CheckingIsReadOnly();
             if (collection == null)
@@ -92,7 +88,7 @@ namespace MyList
             Count = 0;
             Head = Tail = null;
         }
-        public bool Contains(T item)
+        public bool Contains(T? item)
         {
             var result = false;
             var current = Head;
@@ -107,7 +103,7 @@ namespace MyList
             }
             return result;
         }
-        public int IndexOf(T item)
+        public int IndexOf(T? item)
         {
             int result = -1;
             var current = Head;
@@ -127,7 +123,10 @@ namespace MyList
         public void Insert(int index, T item)
         {
             CheckingIsReadOnly();
-            CheckingCorrectnessIndex(index);
+            if (index > Count || index < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "The index must be less than count and not less than zero");
+            }
             if (index == Count)
             {
                 Add(item);
@@ -147,15 +146,18 @@ namespace MyList
                 FindingByIndex(index, item, InsertItem);
             }
         }
-        public bool Remove(T item)
+        public bool Remove(T? item)
         {
-            CheckingIsReadOnly();
             var result = false;
+
             if (Count == 0)
             {
                 return result;
             }
-            if (Head.Data?.Equals(item) ?? item == null)
+
+            CheckingIsReadOnly();
+
+            if (Head?.Data?.Equals(item) ?? item == null)
             {
                 RemoveFirst();
                 result = true;
@@ -163,8 +165,9 @@ namespace MyList
             }
             else
             {
-                var current = Head.Next;
-                while (current.Next != null)
+                var current = Head?.Next;
+
+                while (current?.Next != null)
                 {
                     if (current.Data?.Equals(item) ?? item == null)
                     {
@@ -172,15 +175,18 @@ namespace MyList
                         result = true;
                         return result;
                     }
+
                     current = current.Next;
                 }
             }
+
             if (Tail.Data?.Equals(item) ?? item == null)
             {
                 RemoveLast();
                 OnEvent(RemoveEvent, item);
                 result = true;
             }
+
             return result;
         }
         public void RemoveAt(int index)
@@ -200,7 +206,7 @@ namespace MyList
             }
             else
             {
-                FindingByIndex(index, default(T), RemoveCurrent);
+                FindingByIndex(index, default, RemoveCurrent);
             }
         }
         public void CopyTo(T[] array, int arrayIndex)
@@ -227,7 +233,7 @@ namespace MyList
                     array[i] = Current.Data;
                 }
 
-                OnEvent(CopyEvent, default(T));
+                OnEvent(CopyEvent, default);
             }
         }
         public IEnumerator<T> GetEnumerator()
@@ -244,7 +250,7 @@ namespace MyList
         {
             return GetEnumerator();
         }
-        protected virtual void OnEvent(EventHandler<T> SomeEvent, T e)
+        private void OnEvent(EventHandler<T>? SomeEvent, T? e)
         {
             SomeEvent?.Invoke(this, e);
         }
@@ -266,18 +272,20 @@ namespace MyList
             {
                 throw new ArgumentOutOfRangeException(nameof(index), "The index must be less than count and not less than zero");
             }
-        }        
-        private void FindingByIndex(int index, T value, ActionByIndex action)
+        }
+        private void FindingByIndex(int index, T? NewValue, ActionByIndex action)
         {
             var current = Head;
             var currentIndex = 0;
+
             while (current != null)
             {
                 if (currentIndex == index)
                 {
-                    action(value, current);
+                    action(NewValue, current);
                     break;
                 }
+
                 currentIndex++;
                 current = current.Next;
             }
@@ -292,7 +300,7 @@ namespace MyList
             Count++;
             OnEvent(AddEvent, item);
         }
-        private void RemoveCurrent(T item, Item<T>? current)
+        private void RemoveCurrent(T? item, Item<T>? current)
         {
             OnEvent(RemoveEvent, current.Data);
             current.Previous.Next = current.Next;

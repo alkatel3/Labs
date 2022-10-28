@@ -22,3 +22,15 @@ C:\Users\Dell\source\repos\.NET\Labs\Lab1\MyList\obj\Debug\net6.0\MyList.dll
 C:\Users\Dell\source\repos\.NET\Labs\Lab1\MyList\obj\Debug\net6.0\refint\MyList.dll
 C:\Users\Dell\source\repos\.NET\Labs\Lab1\MyList\obj\Debug\net6.0\MyList.pdb
 C:\Users\Dell\source\repos\.NET\Labs\Lab1\MyList\obj\Debug\net6.0\ref\MyList.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\MyList\bin\Debug\net6.0\MyList.deps.json
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\MyList\bin\Debug\net6.0\MyList.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\MyList\bin\Debug\net6.0\MyList.pdb
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\MyList\obj\Debug\net6.0\MyList.csproj.AssemblyReference.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\MyList\obj\Debug\net6.0\MyList.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\MyList\obj\Debug\net6.0\MyList.AssemblyInfoInputs.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\MyList\obj\Debug\net6.0\MyList.AssemblyInfo.cs
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\MyList\obj\Debug\net6.0\MyList.csproj.CoreCompileInputs.cache
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\MyList\obj\Debug\net6.0\MyList.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\MyList\obj\Debug\net6.0\refint\MyList.dll
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\MyList\obj\Debug\net6.0\MyList.pdb
+C:\Users\Dell\OneDrive\Рабочий стол\Studying\.NET\Labs\Lab1\MyList\obj\Debug\net6.0\ref\MyList.dll

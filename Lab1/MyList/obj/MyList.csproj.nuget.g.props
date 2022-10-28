@@ -13,4 +13,7 @@
     <SourceRoot Include="C:\Users\Dell\.nuget\packages\" />
     <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
   </ItemGroup>
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)microsoft.codecoverage\17.5.0-preview-20221003-04\build\netstandard2.0\Microsoft.CodeCoverage.props" Condition="Exists('$(NuGetPackageRoot)microsoft.codecoverage\17.5.0-preview-20221003-04\build\netstandard2.0\Microsoft.CodeCoverage.props')" />
+  </ImportGroup>
 </Project>

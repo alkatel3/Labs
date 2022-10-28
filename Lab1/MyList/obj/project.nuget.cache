@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "FRass7zo1DL5bnPCKP6QpzObXe04lbJI0EnISn87AKZaOuf0f1uFN6cQ4WLxGWz7DZ7TjJQmA4tDeS7TMUb2iQ==",
+  "dgSpecHash": "w7j+oU0LLagOnKYz0bbSOSU2PyMqLHSFdmKcWFOR9FRBZJTBGsH83V4M/MN7BiL3tKAdIY3x3R2tQZYf7p11gQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Dell\\source\\repos\\.NET\\Labs\\Lab1\\MyList\\MyList.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Dell\\OneDrive\\Рабочий стол\\Studying\\.NET\\Labs\\Lab1\\MyList\\MyList.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.codecoverage\\17.5.0-preview-20221003-04\\microsoft.codecoverage.17.5.0-preview-20221003-04.nupkg.sha512"
+  ],
   "logs": []
 }
