@@ -162,6 +162,7 @@ namespace MyList
                 RemoveFirst();
                 result = true;
                 OnEvent(RemoveEvent, item);
+                return result;
             }
             else
             {
@@ -180,11 +181,12 @@ namespace MyList
                 }
             }
 
-            if (Tail.Data?.Equals(item) ?? item == null)
+            if (Tail?.Data?.Equals(item) ?? item == null)
             {
                 RemoveLast();
                 OnEvent(RemoveEvent, item);
                 result = true;
+                return result;
             }
 
             return result;

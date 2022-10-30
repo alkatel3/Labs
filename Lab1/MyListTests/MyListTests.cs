@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
+using System.Collections;
 
 namespace MyList.Tests
 {
@@ -13,12 +14,14 @@ namespace MyList.Tests
     public class MyListTests
     {
         MyList<int>? list;
+        MyList<string>? strings;
         int[]? testArray;
 
         [TestInitialize]
         public void TestsInit()
         {
             list =new MyList<int>();
+            strings = new MyList<string>();
             testArray = new int[] 
             {
                 1, 2, 3, 4 
@@ -81,6 +84,8 @@ namespace MyList.Tests
         public void ContainsTest()
         {
             list?.AddRange(testArray);
+            strings?.Add(null);
+            strings?.Contains(null).Should().BeTrue();
             list?.Contains(1).Should().BeTrue();
             list?.Contains(2).Should().BeTrue();
             list?.Contains(4).Should().BeTrue();
@@ -92,6 +97,8 @@ namespace MyList.Tests
         public void IndexOfTest()
         {
             list?.AddRange(testArray);
+            strings?.Add(null);
+            strings?.IndexOf(null).Should().Be(0);
             list?.IndexOf(1).Should().Be(0);
             list?.IndexOf(2).Should().Be(1);
             list?.IndexOf(4).Should().Be(3);
@@ -115,7 +122,17 @@ namespace MyList.Tests
         [TestMethod()]
         public void RemoveTest()
         {
+            list?.Remove(10).Should().BeFalse();
             list?.AddRange(testArray);
+            strings.Add(null);
+            strings.Add("Hello");
+            strings.Add(null);
+            strings.Add("C#");
+            strings.Add(null);
+            strings?.Remove(null).Should().BeTrue();
+            strings?.Remove(null).Should().BeTrue();
+            strings?.Remove(null).Should().BeTrue();
+
             list?.Remove(1).Should().BeTrue();
             list?.Remove(3).Should().BeTrue();
             list?.Remove(-1).Should().BeFalse();
@@ -174,9 +191,60 @@ namespace MyList.Tests
             list?[0].Should().Be(10);
             list?[3].Should().Be(30);
             list?[2].Should().Be(20);
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => list[-1]);
         }
 
         [TestMethod()]
-        public void 
+        public void AddRangeExeptionTest()
+        {
+            Assert.ThrowsException<ArgumentNullException>(()=>list?.AddRange(null));
+            list.IsReadOnly = true;
+            Assert.ThrowsException<InvalidOperationException>(() => list?.AddRange(testArray));
+        }
+
+        [TestMethod()]
+        public void ClearExeptionTest()
+        {
+            list.IsReadOnly = true;
+            Assert.ThrowsException<InvalidOperationException>(() => list?.Clear());
+        }
+
+        [TestMethod()]
+        public void AddExeptionTest()
+        {
+            list.IsReadOnly = true;
+            Assert.ThrowsException<InvalidOperationException>(() => list?.Add(5));
+        }
+
+        [TestMethod()]
+        public void InsertExeptionTest()
+        {
+            list?.AddRange(testArray);
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => list?.Insert(5, 10));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => list?.Insert(-1, 10));
+            list.IsReadOnly = true;
+            Assert.ThrowsException<InvalidOperationException>(() => list?.AddRange(testArray));
+        }
+
+        [TestMethod()]
+        public void CopyToExeptionTest()
+        {
+            list?.AddRange(testArray);
+            int[]? Array = null;
+            Assert.ThrowsException<ArgumentNullException>(() => list?.CopyTo(Array, 10));
+            Array = new int[4];
+            Assert.ThrowsException<ArgumentException>(() => list?.CopyTo(Array, 2));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => list?.CopyTo(Array, -1));
+        }
+
+        [TestMethod()]
+        public void IEnumerableGetEnumeratorTest()
+        {
+            IEnumerable values = list;
+
+            values.GetEnumerator().Current.Should().Be(list.GetEnumerator().Current);
+
+
+        }
     }
 }
