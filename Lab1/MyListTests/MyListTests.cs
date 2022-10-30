@@ -117,27 +117,66 @@ namespace MyList.Tests
         {
             list?.AddRange(testArray);
             list?.Remove(1).Should().BeTrue();
+            list?.Remove(3).Should().BeTrue();
             list?.Remove(-1).Should().BeFalse();
-
             list?.Contains(1).Should().BeFalse();
+            list?.Remove(4).Should().BeTrue();
+            list?.Count.Should().Be(1);
+            
         }
 
-        //[TestMethod()]
-        //public void RemoveAtTest()
-        //{
-        //    Assert.Fail();
-        //}
+        [TestMethod()]
+        public void RemoveAtTest()
+        {
+            list?.AddRange(testArray);
+            list?.RemoveAt(0);
+            list?.RemoveAt(1);
+            list?.RemoveAt(list.Count-1);
 
-        //[TestMethod()]
-        //public void CopyToTest()
-        //{
-        //    Assert.Fail();
-        //}
+            list?.Count.Should().Be(1);
+        }
 
-        //[TestMethod()]
-        //public void GetEnumeratorTest()
-        //{
-        //    Assert.Fail();
-        //}
+        [TestMethod()]
+        public void CopyToTest()
+        {
+            list?.AddRange(testArray);
+            var array=new int[4];
+            list?.CopyTo(array, 0);
+            array.Should().BeEquivalentTo(list);
+        }
+
+        [TestMethod()]
+        public void GetEnumeratorTest()
+        {
+            list?.AddRange(testArray);
+            int i = 0;
+            foreach(var item in list)
+            {
+                item.Should().Be(testArray?[i]);
+                i++;
+            }
+        }
+
+        [TestMethod()]
+        public void ReadOnlyByCollectionTest()
+        {
+            ICollection<int> list2 = list;
+            list2?.IsReadOnly.Should().BeFalse();
+        }
+
+        [TestMethod()]
+        public void IndexerTest()
+        {
+            list?.AddRange(testArray);
+            list[0] = 10;
+            list[3] = 30;
+            list[2] = 20;
+            list?[0].Should().Be(10);
+            list?[3].Should().Be(30);
+            list?[2].Should().Be(20);
+        }
+
+        [TestMethod()]
+        public void 
     }
 }

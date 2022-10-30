@@ -120,10 +120,6 @@ namespace Lab1
             persons.IsReadOnly = true;
             //persons.Clear();
 
-            var ls = new List<int>
-            {
-                1,2,3,4,5
-            };
         }
 
         private static void Remove(object? sender, Person e)

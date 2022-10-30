@@ -7,8 +7,8 @@ namespace MyList
         private Item<T>? Head;
         private Item<T>? Tail;
         private delegate void ActionByIndex(T? NewValue, Item<T> current);
-        bool ICollection<T>.IsReadOnly => IsReadOnly;
-
+        bool ICollection<T>.IsReadOnly=>IsReadOnly;
+       
         public event EventHandler<T>? AddEvent;
         public event EventHandler<T>? RemoveEvent;
         public event EventHandler<T>? CopyEvent;
