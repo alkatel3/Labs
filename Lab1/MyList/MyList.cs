@@ -23,7 +23,7 @@ namespace MyList
                 CheckingCorrectnessIndex(index);
                 Item<T>? current = Head;
                 var currentIndex = 0;
-                while (current != null)
+                while (current is not null)
                 {
                     if (currentIndex == index)
                     {
@@ -63,9 +63,11 @@ namespace MyList
             }
             else
             {
-                Item.Previous = Tail;
-                Tail.Next = Item;
-                Tail = Item;
+                if(Tail is not null){
+                    Item.Previous = Tail;
+                    Tail.Next = Item;
+                    Tail = Item;
+                }
             }
             Count++;
             OnEvent(AddEvent, item);
@@ -133,12 +135,17 @@ namespace MyList
             }
             else if (index == 0)
             {
-                var Item = new Item<T>(item);
-                Item.Next = Head;
-                Head.Previous = Item;
-                Head = Item;
-                Count++;
-                OnEvent(AddEvent, item);
+                var Item = new Item<T>(item)
+                {
+                    Next = Head
+                };
+                if (Head != null)
+                {
+                    Head.Previous = Item;
+                    Head = Item;
+                    Count++;
+                    OnEvent(AddEvent, item);
+                }
             }
             else
             {
@@ -150,19 +157,15 @@ namespace MyList
         {
             var result = false;
 
-            if (Count == 0)
-            {
-                return result;
-            }
-
             CheckingIsReadOnly();
 
             if (Head?.Data?.Equals(item) ?? item == null)
             {
-                RemoveFirst();
-                result = true;
-                OnEvent(RemoveEvent, item);
-                return result;
+                result = RemoveFirst();
+                if (result)
+                {
+                    OnEvent(RemoveEvent, item);
+                }
             }
             else
             {
@@ -174,19 +177,19 @@ namespace MyList
                     {
                         RemoveCurrent(item, current);
                         result = true;
-                        return result;
                     }
 
                     current = current.Next;
                 }
             }
 
-            if (Tail?.Data?.Equals(item) ?? item == null)
+            if (Tail?.Data?.Equals(item) ?? item == null &&!result)
             {
-                RemoveLast();
-                OnEvent(RemoveEvent, item);
-                result = true;
-                return result;
+                result = RemoveLast();
+                if (result)
+                {
+                    OnEvent(RemoveEvent, item);
+                }
             }
 
             return result;
@@ -195,13 +198,12 @@ namespace MyList
         {
             CheckingIsReadOnly();
             CheckingCorrectnessIndex(index);
-            if (index == 0)
+            if (index == 0&& Head is not null)
             {
                 OnEvent(RemoveEvent, Head.Data);
                 RemoveFirst();
-
             }
-            else if (index == Count - 1)
+            else if (index == Count - 1 && Tail is not null)
             {
                 OnEvent(RemoveEvent, Tail.Data);
                 RemoveLast();
@@ -211,7 +213,7 @@ namespace MyList
                 FindingByIndex(index, default, RemoveCurrent);
             }
         }
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(T[]? array, int arrayIndex)
         {
             if (array == null)
             {
@@ -223,7 +225,7 @@ namespace MyList
             }
             else if (arrayIndex >= array.Length || Count > array.Length - arrayIndex)
             {
-                throw new ArgumentException(nameof(array), $"The array cannot contain the {this} starting at {arrayIndex}");
+                throw new ArgumentException($"The array cannot contain the {this} starting at {arrayIndex}", nameof(array));
             }
             else
             {
@@ -247,26 +249,31 @@ namespace MyList
                 current = current.Next;
             }
         }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
         private void OnEvent(EventHandler<T>? SomeEvent, T? e)
         {
             SomeEvent?.Invoke(this, e);
         }
-        private void RemoveLast()
+        private bool RemoveLast()
         {
-            Tail = Tail.Previous;
-            Tail.Next = null;
-            Count--;
+            if (Tail is not null && Tail.Previous is not null)
+            {
+                Tail = Tail.Previous;
+                Tail.Next = null;
+                Count--;
+                return true;
+            }
+            return false;
         }
-        private void RemoveFirst()
+        private bool RemoveFirst()
         {
-            Head = Head.Next;
-            Head.Previous = null;
-            Count--;
+            if (Head is not null && Head.Next is not null)
+            {
+                Head = Head.Next;
+                Head.Previous = null;
+                Count--;
+                return true;
+            }
+            return false;
         }
         private void CheckingCorrectnessIndex(int index)
         {
@@ -275,7 +282,7 @@ namespace MyList
                 throw new ArgumentOutOfRangeException(nameof(index), "The index must be less than count and not less than zero");
             }
         }
-        private void FindingByIndex(int index, T? NewValue, ActionByIndex action)
+        private void FindingByIndex(int index, T? NewValue, ActionByIndex? action)
         {
             var current = Head;
             var currentIndex = 0;
@@ -284,7 +291,7 @@ namespace MyList
             {
                 if (currentIndex == index)
                 {
-                    action(NewValue, current);
+                    action?.Invoke(NewValue, current);
                     break;
                 }
 
@@ -292,7 +299,7 @@ namespace MyList
                 current = current.Next;
             }
         }
-        private void InsertItem(T item, Item<T>? current)
+        private void InsertItem(T? item, Item<T>? current)
         {
             var Item = new Item<T>(item);
             current.Previous.Next = Item;
@@ -316,7 +323,10 @@ namespace MyList
                 throw new InvalidOperationException("It's list only for reading, if you want change this list, specify IsReadOnly=false");
             }
         }
-
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 
 }
