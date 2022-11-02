@@ -41,7 +41,7 @@ namespace Lab1
             persons.Add(new("Bob", 34));
             persons.Add(null);
 
-            persons[1] = null;
+            persons[1] = new("Mary", 45);
             persons[0] = new("Roman", 23);
             persons.CopyTo(ArrayPersons, 0);
             persons.AddRange(ArrayPersons);

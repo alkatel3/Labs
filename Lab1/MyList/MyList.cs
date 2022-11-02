@@ -16,7 +16,7 @@ namespace MyList
         public int Count { get; private set; }
         public bool IsReadOnly = false;
 
-        public T? this[int index]
+        public T this[int index]
         {
             get
             {
@@ -61,6 +61,7 @@ namespace MyList
             {
                 Head = Tail = Item;
             }
+
             else
             {
                 if(Tail is not null){
@@ -69,6 +70,7 @@ namespace MyList
                     Tail = Item;
                 }
             }
+
             Count++;
             OnEvent(AddEvent, item);
         }
@@ -79,6 +81,7 @@ namespace MyList
             {
                 throw new ArgumentNullException(nameof(collection), "The collection cannot be null");
             }
+
             foreach (var item in collection)
             {
                 Add(item);
@@ -101,8 +104,10 @@ namespace MyList
                     result = true;
                     break;
                 }
+
                 current = current.Next;
             }
+
             return result;
         }
         public int IndexOf(T? item)
@@ -117,9 +122,11 @@ namespace MyList
                     result = currentIndex;
                     break;
                 }
+
                 currentIndex++;
                 current = current.Next;
             }
+
             return result;
         }
         public void Insert(int index, T item)
@@ -129,6 +136,7 @@ namespace MyList
             {
                 throw new ArgumentOutOfRangeException(nameof(index), "The index must be less than count and not less than zero");
             }
+
             if (index == Count)
             {
                 Add(item);
@@ -249,6 +257,7 @@ namespace MyList
                 current = current.Next;
             }
         }
+
         private void OnEvent(EventHandler<T>? SomeEvent, T? e)
         {
             SomeEvent?.Invoke(this, e);
@@ -262,6 +271,7 @@ namespace MyList
                 Count--;
                 return true;
             }
+
             return false;
         }
         private bool RemoveFirst()
@@ -273,6 +283,7 @@ namespace MyList
                 Count--;
                 return true;
             }
+
             return false;
         }
         private void CheckingCorrectnessIndex(int index)
@@ -299,7 +310,7 @@ namespace MyList
                 current = current.Next;
             }
         }
-        private void InsertItem(T? item, Item<T>? current)
+        private void InsertItem(T? item, Item<T> current)
         {
             var Item = new Item<T>(item);
             current.Previous.Next = Item;
@@ -309,7 +320,7 @@ namespace MyList
             Count++;
             OnEvent(AddEvent, item);
         }
-        private void RemoveCurrent(T? item, Item<T>? current)
+        private void RemoveCurrent(T? item, Item<T> current)
         {
             OnEvent(RemoveEvent, current.Data);
             current.Previous.Next = current.Next;
