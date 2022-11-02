@@ -18,14 +18,14 @@ namespace MyList_NUnitTests
         }
 
         [Test]
-        public void MyListTest()
+        public void MyList_CreatList_CreatedEmptyList()
         {
             list.Count.Should().Be(0);
             list.Should().BeEmpty();
         }
 
         [Test]
-        public void MyListTest1()
+        public void MyList_CreatListBasedIEnumerable_CreatedWithElements()
         {
             List<int> list = new List<int>(testArray);
 
@@ -40,30 +40,28 @@ namespace MyList_NUnitTests
         }
 
         [Test]
-        public void AddTest()
+        public void Add_AddingElement_AddedElement()
         {
             list.Add(12);
-            list.Count.Should().Be(1);
+            list.Should().HaveElementAt(0, 12);
 
             list.Add(15);
-            list.Count.Should().Be(2);
+            list.Should().HaveElementAt(1, 15);
         }
 
         [Test]
-        public void AddRangeTest()
+        public void AddRange_AddindCollection_AddedCollection()
         {
             list.AddRange(testArray);
 
             list.Count.Should().Be(4);
-            list.Should().AllBeOfType<int>();
-            list.Should().StartWith(1);
-            list.Should().Contain(list);
+            list.Should().Contain(testArray);
             list.Should().HaveElementAt(1, 2);
             list.Should().EndWith(4);
         }
 
         [Test]
-        public void ClearTest()
+        public void Clear_RemoveAllElements_EmptyList()
         {
             list.AddRange(testArray);
 
@@ -72,14 +70,14 @@ namespace MyList_NUnitTests
             list.Clear();
             list.Should().BeEmpty();
             list.Count.Should().Be(0);
-
         }
 
         [Test]
-        public void ContainsTest()
+        public void Contains_FindingElement_ReturnBoolResult()
         {
             list.AddRange(testArray);
             strings.Add(null);
+
             strings.Contains(null).Should().BeTrue();
             list.Contains(1).Should().BeTrue();
             list.Contains(2).Should().BeTrue();
@@ -89,10 +87,11 @@ namespace MyList_NUnitTests
         }
 
         [Test]
-        public void IndexOfTest()
+        public void IndexOf_FindingElement_ReturnElement()
         {
             list.AddRange(testArray);
             strings.Add(null);
+
             strings.IndexOf(null).Should().Be(0);
             list.IndexOf(1).Should().Be(0);
             list.IndexOf(2).Should().Be(1);
@@ -102,7 +101,7 @@ namespace MyList_NUnitTests
         }
 
         [Test]
-        public void InsertTest()
+        public void Insert_InsertElementByIndex_AddedElementByIndex()
         {
             list.AddRange(testArray);
             list.Insert(0, 10);
@@ -115,7 +114,7 @@ namespace MyList_NUnitTests
         }
 
         [Test]
-        public void RemoveTest()
+        public void Remove_RemovingFirstEntryElement_RemovedElement()
         {
             strings.Remove(null).Should().BeFalse();
             list.Remove(10).Should().BeFalse();
@@ -143,7 +142,7 @@ namespace MyList_NUnitTests
         }
 
         [Test]
-        public void RemoveAtTest()
+        public void RemoveAt_RemovingElementByIndex_RemovedElement()
         {
             list.AddRange(testArray);
             list.RemoveAt(0);
@@ -154,16 +153,18 @@ namespace MyList_NUnitTests
         }
 
         [Test]
-        public void CopyToTest()
+        public void CopyTo_CopyingListToArrayFromIndex_ArrayContainsList()
         {
             list.AddRange(testArray);
-            var array = new int[4];
-            list.CopyTo(array, 0);
-            array.Should().BeEquivalentTo(list);
+
+            var array = new int[5];
+            list.CopyTo(array, 1);
+
+            array.Should().Contain(list);
         }
 
         [Test]
-        public void GetEnumeratorTest()
+        public void GetEnumerator_GetingListEnumerator_ReturnEnumerator()
         {
             list.AddRange(testArray);
             int i = 0;
@@ -182,7 +183,7 @@ namespace MyList_NUnitTests
         }
 
         [Test]
-        public void IndexerTest()
+        public void Indexer_SetElementByIndex_ReturnElementByIndex()
         {
             list.AddRange(testArray);
 
@@ -196,17 +197,22 @@ namespace MyList_NUnitTests
         }
 
         [Test]
-        public void AddRangeExeptionTest()
+        public void AddRange_NullCollectin_ThrowArgumentNullException()
         {
-            Action act1= () => list.AddRange(null);
-            act1.Should().Throw<ArgumentNullException>();
-            list.IsReadOnly = true;
-            Action act2 = () => list.AddRange(testArray);
-            act2.Should().Throw<InvalidOperationException>();
+            Action act= () => list.AddRange(null);
+            act.Should().Throw<ArgumentNullException>();
         }
 
         [Test]
-        public void ClearExeptionTest()
+        public void AddRange_AddRangeToReadOnlyList_ThrowInvalidOperationException()
+        {
+            list.IsReadOnly = true;
+            Action act = () => list.AddRange(testArray);
+            act.Should().Throw<InvalidOperationException>();
+        }
+
+        [Test]
+        public void Clear_ClearReadOnlyList_ThrowInvalidOperationException()
         {
             list.IsReadOnly = true;
             Action act = () => list.Clear();
@@ -214,7 +220,7 @@ namespace MyList_NUnitTests
         }
 
         [Test]
-        public void AddExeptionTest()
+        public void Add_AddToReadOnlyList_ThrowInvalidOperationException()
         {
             list.IsReadOnly = true;
             Action act = () => list.Add(5);
@@ -222,7 +228,7 @@ namespace MyList_NUnitTests
         }
 
         [Test]
-        public void InsertExeptionTest()
+        public void Insert_InsertElementsOutOfListRange_ThrowArgumentOutOfRangeException()
         {
             list.AddRange(testArray);
 
@@ -234,7 +240,7 @@ namespace MyList_NUnitTests
         }
 
         [Test]
-        public void RemoveAtExeptionTest()
+        public void RemoveAt_RemoveElementsOutOfListRange_ThrowArgumentOutOfRangeException()
         {
             list.AddRange(testArray);
 
@@ -246,22 +252,37 @@ namespace MyList_NUnitTests
         }
 
         [Test]
-        public void CopyToExeptionTest()
+        public void CopyTo_CopyToNullArray_ThrowArgumentNullException()
+        {
+            int[]? Array = null;
+
+            Action act = () => list.CopyTo(Array, 10);
+
+            act.Should().Throw<ArgumentNullException>();
+        }
+
+        [Test]
+        public void CopyTo_ArrayCantContainList_ThrowArgumentException()
         {
             list.AddRange(testArray);
-            int[]? Array = null;
+            var Array = new int[4];
 
             Action act1 = () => list.CopyTo(Array, 10);
             Action act2 = () => list.CopyTo(Array, 2);
-            Action act3 = () => list.CopyTo(Array, -1);
-
-            act1.Should().Throw<ArgumentNullException>();
-
-            Array = new int[4];
 
             act1.Should().Throw<ArgumentException>();
             act2.Should().Throw<ArgumentException>();
-            act3.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Test]2
+        public void CopyTo_InputIndexMoreArrayLenght_ThrowArgumentOutOfRangeException()
+        {
+            list.AddRange(testArray);
+            var Array = new int[4];
+
+            Action act = () => list.CopyTo(Array, -1);
+
+            act.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Test]
