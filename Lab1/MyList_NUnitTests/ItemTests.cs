@@ -3,19 +3,35 @@
     public class ItemTests
     {
         [Test]
-        public void ItemTest()
+        public void Item_CreatElementWithDataTen_DataMustBeTen()
         {
             var item = new Item<int>(10);
-            item.Data.Should().Be(10);
+
+            var actual=item.Data;
+
+            actual.Should().Be(10);
         }
 
         [Test]
-        public void ToStringTest()
+        public void ToString_DataIsAny_ReturnDataToString()
         {
-            var item = new Item<string>("Hello");
-            item.ToString().Should().Be("Hello");
-            item.Data = null;
-            item.ToString().Should().Be("null");
+            var expected = "Hello";
+            var item = new Item<string>(expected);
+            
+            var actual=item.ToString();
+
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void ToString_DataIsNull_ReturtStringNull()
+        {
+            var expected = "null";
+            var item = new Item<string>(null);
+
+            var actual = item.ToString();
+
+            actual.Should().Be(expected);
         }
     }
 }

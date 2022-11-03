@@ -28,9 +28,16 @@ namespace Lab1
             var ArrayPersons = new Person[6];
             persons.CopyTo(ArrayPersons, 0);
 
-            foreach(var item in persons)
+            foreach (var item in persons)
             {
-                Console.WriteLine(item);
+                if (item == null)
+                {
+                    Console.WriteLine("null");
+                }
+                else
+                {
+                    Console.WriteLine(item);
+                }
             }
             Console.WriteLine();
 
@@ -48,7 +55,14 @@ namespace Lab1
 
             foreach (var item in persons)
             {
+                if (item == null)
+                {
+                    Console.WriteLine("null");
+                }
+                else
+                {
                     Console.WriteLine(item);
+                }
             }
             Console.WriteLine();
             persons.Clear();
@@ -88,10 +102,6 @@ namespace Lab1
             Console.WriteLine(persons.Remove(null));
             Console.WriteLine(persons.IndexOf(null));
             Console.WriteLine(persons.Remove(null));
-            Console.WriteLine(persons.Remove(null));
-            Console.WriteLine(persons.IndexOf(null));
-            Console.WriteLine(persons.Remove(null));
-            Console.WriteLine(persons.IndexOf(null));
             foreach (var item in persons)
             {
                 if (item == null)

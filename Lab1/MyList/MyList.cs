@@ -129,7 +129,7 @@ namespace MyList
 
             return result;
         }
-        public void Insert(int index, T item)
+        public void Insert(int index, T? item)
         {
             CheckingIsReadOnly();
             if (index > Count || index < 0)
@@ -276,10 +276,9 @@ namespace MyList
         }
         private bool RemoveFirst()
         {
-            if (Head is not null && Head.Next is not null)
+            if (Head is not null)
             {
                 Head = Head.Next;
-                Head.Previous = null;
                 Count--;
                 return true;
             }
